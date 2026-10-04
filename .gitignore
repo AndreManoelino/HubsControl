@@ -1,0 +1,26 @@
+cat > .gitignore <<'EOF'
+# .NET
+**/bin/
+**/obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Environment / secrets
+**/.env
+**/.env.*
+!.env.example
+
+# Node
+**/node_modules/
+**/dist/
+
+# Logs
+*.log
+
+# OS
+Thumbs.db
+.DS_Store
+EOF
