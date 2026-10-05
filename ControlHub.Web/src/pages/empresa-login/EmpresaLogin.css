@@ -1,449 +1,292 @@
+/* =========================================
+   CONTROLLHUB - LOGIN PREMIUM DARK
+   Sem scroll, sem barra lateral, sem branco queimando
+========================================= */
 
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
-.empresa-login-page {
-  min-height: 100vh;
+html, body {
   width: 100%;
+  height: 100%;
+  overflow: hidden !important;
+  background: #0B1220;
+  font-family: 'Inter', -apple-system, sans-serif;
+}
+
+/* PÁGINA PRINCIPAL - TRAVADA */
+.empresa-login-page {
   display: flex;
-  background: #f7f8fa;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: #0B1220;
 }
 
 /* =========================================
    LADO DA IMAGEM
 ========================================= */
-
 .empresa-login-imagem {
   position: relative;
-  width: 58%;
-  min-height: 100vh;
-
+  width: 56%;
+  height: 100vh;
   background-size: cover;
   background-position: center;
-
   display: flex;
   align-items: flex-end;
-
+  padding: 48px;
   overflow: hidden;
 }
 
-.empresa-login-overlay {
+.empresa-login-image-gradient {
   position: absolute;
   inset: 0;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0.08) 0%,
-      rgba(0, 0, 0, 0.28) 45%,
-      rgba(0, 0, 0, 0.82) 100%
-    );
+  background: linear-gradient(180deg, rgba(11,18,32,0.1) 0%, rgba(11,18,32,0.85) 75%, #0B1220 100%);
 }
 
-.empresa-login-marca {
+.empresa-login-image-glow {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(59,130,246,0.25) 0%, transparent 70%);
+  top: -100px;
+  left: -100px;
+  filter: blur(40px);
+}
+
+.empresa-login-image-content {
   position: relative;
   z-index: 2;
+  width: 100%;
+}
 
+.empresa-login-brand {
   display: flex;
   align-items: center;
-  gap: 22px;
-
-  width: 100%;
-
-  padding: 50px;
-  color: white;
+  gap: 16px;
+  margin-bottom: 32px;
 }
 
-.empresa-login-logo {
-  width: 82px;
-  height: 82px;
-
-  object-fit: cover;
-
-  border-radius: 20px;
-
+.empresa-login-logo-wrapper {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
   background: white;
-
-  padding: 6px;
-
-  box-shadow:
-    0 12px 35px rgba(0, 0, 0, 0.25);
-}
-
-.empresa-login-marca h1 {
-  margin: 0;
-
-  font-size: 32px;
-  font-weight: 700;
-
-  letter-spacing: -0.5px;
-}
-
-.empresa-login-marca p {
-  margin: 7px 0 0;
-
-  font-size: 15px;
-
-  opacity: 0.85;
-}
-
-/* =========================================
-   LADO DO LOGIN
-========================================= */
-
-.empresa-login-formulario {
-  width: 42%;
-  min-height: 100vh;
-
+  padding: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+.empresa-login-logo { width: 100%; height: 100%; object-fit: contain; }
+.empresa-login-logo-placeholder {
+  width: 56px; height: 56px;
+  border-radius: 14px;
+  background: #1e293b;
+  color: white; display: grid; place-items: center;
+  font-weight: 800; font-size: 24px;
+}
 
-  padding: 50px;
+.empresa-login-brand-info span {
+  color: rgba(255,255,255,0.6);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.empresa-login-brand-info h1 {
+  color: white;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.empresa-login-image-message { display: flex; gap: 16px; align-items: flex-start; margin: 32px 0; }
+.empresa-login-image-line { width: 3px; height: 48px; background: #3b82f6; border-radius: 10px; display: block; }
+.empresa-login-image-message p { color: rgba(255,255,255,0.85); font-size: 20px; font-weight: 400; line-height: 1.3; }
+
+.empresa-login-image-footer {
+  display: flex; gap: 12px; align-items: center;
+  color: rgba(255,255,255,0.45); font-size: 12px;
+  letter-spacing: 0.05em;
+}
+.empresa-login-image-dot { font-size: 6px; color: #3b82f6; }
+
+/* =========================================
+   LADO DO FORMULÁRIO - DARK
+========================================= */
+.empresa-login-formulario {
+  width: 44%;
+  height: 100vh;
+  background: #0f172a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  overflow: hidden;
+  border-left: 1px solid rgba(255,255,255,0.06);
 }
 
 .empresa-login-box {
   width: 100%;
-  max-width: 440px;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
 }
 
-.empresa-login-logo-mobile {
-  display: none;
-}
+.empresa-login-mobile-brand { display: none; }
 
-.empresa-login-titulo {
-  margin-bottom: 36px;
-}
+.empresa-login-titulo { display: flex; flex-direction: column; gap: 8px; }
+.empresa-login-welcome { color: #3b82f6; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+.empresa-login-titulo h2 { color: white; font-size: 26px; font-weight: 700; }
+.empresa-login-titulo p { color: #94a3b8; font-size: 14px; line-height: 1.5; }
 
-.empresa-login-titulo span {
-  display: block;
+.empresa-login-form { display: flex; flex-direction: column; gap: 18px; }
+.empresa-login-campo { display: flex; flex-direction: column; gap: 8px; }
+.empresa-login-campo label { color: #cbd5e1; font-size: 13px; font-weight: 500; }
+.empresa-login-label-row { display: flex; justify-content: space-between; }
 
-  margin-bottom: 8px;
-
-  color: #6b7280;
-
-  font-size: 14px;
-  font-weight: 600;
-
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.empresa-login-titulo h2 {
-  margin: 0;
-
-  color: #111827;
-
-  font-size: 34px;
-  font-weight: 700;
-
-  letter-spacing: -1px;
-}
-
-.empresa-login-titulo p {
-  margin: 10px 0 0;
-
-  color: #6b7280;
-
-  font-size: 15px;
-}
-
-/* =========================================
-   CAMPOS
-========================================= */
-
-.empresa-login-campo {
-  margin-bottom: 21px;
-}
-
-.empresa-login-campo label {
-  display: block;
-
-  margin-bottom: 8px;
-
-  color: #374151;
-
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.empresa-login-campo input {
-  width: 100%;
-
-  height: 54px;
-
-  padding: 0 16px;
-
-  border: 1px solid #d9dde5;
+.empresa-login-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #1e293b;
+  border: 1px solid #334155;
   border-radius: 12px;
+  transition: all .2s;
+}
+.empresa-login-input-wrapper:focus-within {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+  background: #1e293b;
+}
 
-  background: white;
+.empresa-login-input-icon {
+  padding-left: 14px;
+  color: #64748b;
+  display: flex;
+}
+.empresa-login-input-icon svg { width: 18px; height: 18px; }
 
-  color: #111827;
-
-  font-size: 15px;
-
+.empresa-login-input-wrapper input {
+  flex: 1;
+  background: transparent;
+  border: none;
   outline: none;
-
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
+  color: white;
+  padding: 14px 12px;
+  font-size: 14px;
 }
+.empresa-login-input-wrapper input::placeholder { color: #475569; }
 
-.empresa-login-campo input::placeholder {
-  color: #9ca3af;
+.empresa-login-password-toggle {
+  background: none; border: none; cursor: pointer;
+  color: #64748b; padding: 0 14px; display: flex;
 }
-
-.empresa-login-campo input:focus {
-  border-color: #111827;
-
-  box-shadow:
-    0 0 0 4px rgba(17, 24, 39, 0.08);
-}
-
-/* =========================================
-   ERRO
-========================================= */
+.empresa-login-password-toggle:hover { color: #94a3b8; }
+.empresa-login-password-toggle svg { width: 18px; height: 18px; }
 
 .empresa-login-mensagem {
-  margin-bottom: 18px;
-
+  display: flex; gap: 10px; align-items: center;
+  background: rgba(239,68,68,0.1);
+  border: 1px solid rgba(239,68,68,0.2);
+  color: #fca5a5;
   padding: 12px 14px;
-
-  border: 1px solid #fecaca;
   border-radius: 10px;
-
-  background: #fef2f2;
-
-  color: #b91c1c;
-
-  font-size: 14px;
+  font-size: 13px;
 }
-
-/* =========================================
-   BOTÃO
-========================================= */
+.empresa-login-mensagem-icon {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: #ef4444; color: white;
+  display: grid; place-items: center;
+  font-weight: 800; font-size: 12px; flex-shrink: 0;
+}
 
 .empresa-login-botao {
   width: 100%;
-  height: 54px;
-
+  background: #3b82f6;
+  color: white;
   border: none;
   border-radius: 12px;
-
-  background: #111827;
-
-  color: white;
-
-  font-size: 15px;
+  padding: 14px;
   font-weight: 600;
-
+  font-size: 14px;
   cursor: pointer;
-
-  transition:
-    transform 0.15s ease,
-    opacity 0.15s ease,
-    box-shadow 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all .2s;
+  margin-top: 4px;
 }
+.empresa-login-botao:hover { background: #2563eb; transform: translateY(-1px); box-shadow: 0 8px 20px rgba(59,130,246,0.3); }
+.empresa-login-botao:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.empresa-login-botao svg { width: 16px; height: 16px; }
 
-.empresa-login-botao:hover {
-  transform: translateY(-1px);
-
-  box-shadow:
-    0 8px 20px rgba(17, 24, 39, 0.18);
+.empresa-login-button-spinner {
+  width: 16px; height: 16px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
 }
+@keyframes spin { to { transform: rotate(360deg); } }
 
-.empresa-login-botao:active {
-  transform: translateY(0);
+.empresa-login-security {
+  display: flex; gap: 12px; align-items: center;
+  background: #111d33;
+  border: 1px solid rgba(255,255,255,0.05);
+  padding: 12px 14px;
+  border-radius: 10px;
 }
-
-.empresa-login-botao:disabled {
-  opacity: 0.65;
-  cursor: not-allowed;
-}
-
-/* =========================================
-   RODAPÉ
-========================================= */
+.empresa-login-security-icon { color: #22c55e; display: flex; }
+.empresa-login-security-icon svg { width: 20px; height: 20px; }
+.empresa-login-security div { display: flex; flex-direction: column; }
+.empresa-login-security strong { color: #e2e8f0; font-size: 12px; }
+.empresa-login-security span { color: #64748b; font-size: 11px; }
 
 .empresa-login-rodape {
-  margin-top: 30px;
+  display: flex; gap: 8px; align-items: center; justify-content: center;
+  color: #475569; font-size: 11px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 20px;
+  margin-top: 4px;
+}
 
+/* LOADING E ERRO - TAMBEM DARK */
+.empresa-login-loading, .empresa-login-error-page {
+  width: 100vw; height: 100vh;
+  display: grid; place-items: center;
+  background: #0B1220;
+}
+.empresa-login-loading-card, .empresa-login-error-card {
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  padding: 32px;
+  border-radius: 16px;
   text-align: center;
-
-  color: #9ca3af;
-
-  font-size: 13px;
+  max-width: 400px;
 }
-
-/* =========================================
-   LOADING
-========================================= */
-
-.empresa-login-loading {
-  min-height: 100vh;
-
-  display: flex;
-  flex-direction: column;
-
-  align-items: center;
-  justify-content: center;
-
-  background: #f7f8fa;
-
-  color: #6b7280;
-}
-
 .empresa-login-spinner {
-  width: 38px;
-  height: 38px;
-
-  margin-bottom: 15px;
-
-  border: 3px solid #e5e7eb;
-  border-top-color: #111827;
-
+  width: 32px; height: 32px;
+  border: 3px solid #1e293b;
+  border-top-color: #3b82f6;
   border-radius: 50%;
-
-  animation: empresa-login-spin 0.8s linear infinite;
+  animation: spin .8s linear infinite;
+  margin: 0 auto 16px;
 }
 
-@keyframes empresa-login-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* =========================================
-   ERRO DE EMPRESA
-========================================= */
-
-.empresa-login-error-page {
-  min-height: 100vh;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  padding: 30px;
-
-  background: #f7f8fa;
-}
-
-.empresa-login-error-card {
-  width: 100%;
-  max-width: 420px;
-
-  padding: 40px;
-
-  border-radius: 18px;
-
-  background: white;
-
-  text-align: center;
-
-  box-shadow:
-    0 15px 50px rgba(0, 0, 0, 0.08);
-}
-
-.empresa-login-error-card h1 {
-  margin: 0 0 10px;
-
-  color: #111827;
-
-  font-size: 32px;
-}
-
-.empresa-login-error-card p {
-  margin: 0 0 25px;
-
-  color: #6b7280;
-}
-
-.empresa-login-error-card button {
-  height: 46px;
-
-  padding: 0 24px;
-
-  border: none;
-  border-radius: 10px;
-
-  background: #111827;
-
-  color: white;
-
-  cursor: pointer;
-}
-
-/* =========================================
-   RESPONSIVO
-========================================= */
-
+/* RESPONSIVO */
 @media (max-width: 900px) {
-  .empresa-login-page {
-    display: block;
-  }
-
-  .empresa-login-imagem {
-    width: 100%;
-    min-height: 300px;
-    height: 38vh;
-  }
-
-  .empresa-login-marca {
-    padding: 30px;
-  }
-
-  .empresa-login-marca h1 {
-    font-size: 25px;
-  }
-
-  .empresa-login-logo {
-    width: 65px;
-    height: 65px;
-  }
-
-  .empresa-login-formulario {
-    width: 100%;
-    min-height: auto;
-
-    padding: 45px 25px 35px;
-  }
+  html, body { overflow: auto !important; }
+  .empresa-login-page { flex-direction: column; height: auto; min-height: 100vh; overflow: auto; }
+  .empresa-login-imagem { width: 100%; height: 300px; padding: 24px; }
+  .empresa-login-formulario { width: 100%; height: auto; padding: 24px; border-left: none; }
+  .empresa-login-mobile-brand { display: flex; justify-content: center; }
+  .empresa-login-mobile-brand img { height: 48px; }
+  .empresa-login-image-footer { display: none; }
 }
-
-@media (max-width: 550px) {
-  .empresa-login-imagem {
-    min-height: 250px;
-    height: 32vh;
-  }
-
-  .empresa-login-marca {
-    gap: 14px;
-    padding: 22px;
-  }
-
-  .empresa-login-logo {
-    width: 55px;
-    height: 55px;
-    border-radius: 14px;
-  }
-
-  .empresa-login-marca h1 {
-    font-size: 20px;
-  }
-
-  .empresa-login-marca p {
-    font-size: 12px;
-  }
-
-  .empresa-login-formulario {
-    padding: 35px 20px;
-  }
-
-  .empresa-login-titulo h2 {
-    font-size: 28px;
-  }
-}
-
