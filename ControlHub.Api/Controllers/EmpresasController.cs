@@ -331,4 +331,26 @@ public class EmpresasController : ControllerBase
                 }
         }));
     }
+    [AllowAnonymous]
+    [HttpGet("publica/{url}")]
+    public async Task<IActionResult> BuscarEmpresaPublica(string url)
+    {
+        var empresa = await _empresaService.BuscarPublicaPorUrlAsync(url);
+
+        if (empresa is null)
+            return NotFound(new
+            {
+                mensagem = "Empresa não encontrada."
+            });
+
+        return Ok(new
+        {
+            id = empresa.Id,
+            nome = empresa.Nome,
+            nomeFantasia = empresa.NomeFantasia,
+            logoUrl = empresa.LogoUrl,
+            imagemLoginUrl = empresa.ImagemLoginUrl,
+            url = empresa.Url
+        });
+    }
 }

@@ -202,4 +202,17 @@ public class EmpresaService
             .OrderBy(x => x.Nome)
             .ToListAsync();
     }
+
+    public async Task<Empresa?> BuscarPublicaPorUrlAsync(string url)
+    {
+        if(string.IsNullOrWhiteSpace(url))
+            return null;
+
+            url = url.Trim().Trim('/').ToLower();
+            return await _context.Empresas
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x =>
+                    x.Url.ToLower() == url && x.Ativa);
+
+    }
 }

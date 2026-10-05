@@ -1,0 +1,444 @@
+
+* {
+  box-sizing: border-box;
+}
+
+.empresa-painel {
+  min-height: 100vh;
+  display: flex;
+  background: #f6f7f9;
+  color: #111827;
+}
+
+/* SIDEBAR */
+
+.empresa-sidebar {
+  width: 255px;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 25px 16px;
+
+  background: #111827;
+  color: white;
+}
+
+.empresa-sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 5px 10px 30px;
+}
+
+.empresa-sidebar-logo-icon {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  background: white;
+  color: #111827;
+
+  font-size: 19px;
+  font-weight: 800;
+}
+
+.empresa-sidebar-logo strong {
+  display: block;
+  font-size: 15px;
+}
+
+.empresa-sidebar-logo span {
+  display: block;
+  margin-top: 3px;
+
+  color: #9ca3af;
+
+  font-size: 11px;
+}
+
+/* MENU */
+
+.empresa-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.empresa-menu-item,
+.empresa-menu-sair {
+  width: 100%;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+  gap: 13px;
+
+  padding: 0 14px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: transparent;
+
+  color: #d1d5db;
+
+  font-size: 14px;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.empresa-menu-item:hover,
+.empresa-menu-item.ativo {
+  background: #1f2937;
+  color: white;
+}
+
+.empresa-menu-item span,
+.empresa-menu-sair span {
+  width: 22px;
+  text-align: center;
+}
+
+.empresa-menu-sair {
+  margin-top: auto;
+
+  color: #9ca3af;
+}
+
+.empresa-menu-sair:hover {
+  background: #1f2937;
+  color: white;
+}
+
+/* CONTEUDO */
+
+.empresa-conteudo {
+  flex: 1;
+  padding: 45px;
+}
+
+/* HEADER */
+
+.empresa-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 38px;
+}
+
+.empresa-header-pequeno {
+  color: #9ca3af;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+}
+
+.empresa-header h1 {
+  margin: 7px 0 4px;
+
+  color: #111827;
+
+  font-size: 32px;
+  letter-spacing: -0.8px;
+}
+
+.empresa-header p {
+  margin: 0;
+
+  color: #6b7280;
+}
+
+.empresa-usuario {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.empresa-avatar {
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #111827;
+  color: white;
+
+  font-weight: 700;
+}
+
+.empresa-usuario strong,
+.empresa-usuario span {
+  display: block;
+}
+
+.empresa-usuario strong {
+  font-size: 14px;
+}
+
+.empresa-usuario span {
+  margin-top: 3px;
+
+  color: #9ca3af;
+
+  font-size: 12px;
+}
+
+/* AÇÕES */
+
+.empresa-acoes {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 16px;
+
+  margin-bottom: 30px;
+}
+
+.empresa-card {
+  min-height: 105px;
+
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  padding: 22px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 15px;
+
+  background: white;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.empresa-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.07);
+}
+
+.empresa-card-icone {
+  width: 50px;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 13px;
+
+  background: #f3f4f6;
+
+  font-size: 22px;
+}
+
+.empresa-card div:nth-child(2) {
+  flex: 1;
+}
+
+.empresa-card strong,
+.empresa-card span {
+  display: block;
+}
+
+.empresa-card strong {
+  color: #111827;
+  font-size: 15px;
+}
+
+.empresa-card span {
+  margin-top: 5px;
+
+  color: #6b7280;
+
+  font-size: 12px;
+}
+
+.empresa-card b {
+  color: #9ca3af;
+
+  font-size: 20px;
+}
+
+.acao-principal {
+  border-color: #d1d5db;
+}
+
+/* RESUMO */
+
+.empresa-resumo {
+  padding: 26px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+
+  background: white;
+}
+
+.empresa-resumo-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 25px;
+}
+
+.empresa-resumo-header span:first-child {
+  color: #9ca3af;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  text-transform: uppercase;
+}
+
+.empresa-resumo-header h2 {
+  margin: 4px 0 0;
+
+  font-size: 20px;
+}
+
+.empresa-status {
+  padding: 7px 11px;
+
+  border-radius: 20px;
+
+  background: #f0fdf4;
+
+  color: #15803d;
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.empresa-indicadores {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  border-top: 1px solid #f0f0f0;
+}
+
+.empresa-indicadores > div {
+  padding: 20px 15px;
+
+  border-right: 1px solid #f0f0f0;
+}
+
+.empresa-indicadores > div:last-child {
+  border-right: none;
+}
+
+.empresa-indicadores span {
+  display: block;
+
+  color: #9ca3af;
+
+  font-size: 12px;
+}
+
+.empresa-indicadores strong {
+  display: block;
+
+  margin-top: 7px;
+
+  color: #111827;
+
+  font-size: 22px;
+}
+
+/* RESPONSIVO */
+
+@media (max-width: 900px) {
+  .empresa-sidebar {
+    width: 215px;
+  }
+
+  .empresa-conteudo {
+    padding: 30px;
+  }
+
+  .empresa-acoes {
+    grid-template-columns: 1fr;
+  }
+
+  .empresa-indicadores {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .empresa-indicadores > div:nth-child(2) {
+    border-right: none;
+  }
+}
+
+@media (max-width: 650px) {
+  .empresa-painel {
+    display: block;
+  }
+
+  .empresa-sidebar {
+    width: 100%;
+    min-height: auto;
+  }
+
+  .empresa-menu {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .empresa-menu-sair {
+    margin-top: 15px;
+  }
+
+  .empresa-conteudo {
+    padding: 25px 18px;
+  }
+
+  .empresa-header {
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .empresa-usuario {
+    display: none;
+  }
+
+  .empresa-header h1 {
+    font-size: 26px;
+  }
+
+  .empresa-indicadores {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+

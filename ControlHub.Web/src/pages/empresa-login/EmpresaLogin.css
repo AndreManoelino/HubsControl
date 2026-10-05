@@ -1,0 +1,449 @@
+
+* {
+  box-sizing: border-box;
+}
+
+.empresa-login-page {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  background: #f7f8fa;
+}
+
+/* =========================================
+   LADO DA IMAGEM
+========================================= */
+
+.empresa-login-imagem {
+  position: relative;
+  width: 58%;
+  min-height: 100vh;
+
+  background-size: cover;
+  background-position: center;
+
+  display: flex;
+  align-items: flex-end;
+
+  overflow: hidden;
+}
+
+.empresa-login-overlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.08) 0%,
+      rgba(0, 0, 0, 0.28) 45%,
+      rgba(0, 0, 0, 0.82) 100%
+    );
+}
+
+.empresa-login-marca {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+  gap: 22px;
+
+  width: 100%;
+
+  padding: 50px;
+  color: white;
+}
+
+.empresa-login-logo {
+  width: 82px;
+  height: 82px;
+
+  object-fit: cover;
+
+  border-radius: 20px;
+
+  background: white;
+
+  padding: 6px;
+
+  box-shadow:
+    0 12px 35px rgba(0, 0, 0, 0.25);
+}
+
+.empresa-login-marca h1 {
+  margin: 0;
+
+  font-size: 32px;
+  font-weight: 700;
+
+  letter-spacing: -0.5px;
+}
+
+.empresa-login-marca p {
+  margin: 7px 0 0;
+
+  font-size: 15px;
+
+  opacity: 0.85;
+}
+
+/* =========================================
+   LADO DO LOGIN
+========================================= */
+
+.empresa-login-formulario {
+  width: 42%;
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 50px;
+}
+
+.empresa-login-box {
+  width: 100%;
+  max-width: 440px;
+}
+
+.empresa-login-logo-mobile {
+  display: none;
+}
+
+.empresa-login-titulo {
+  margin-bottom: 36px;
+}
+
+.empresa-login-titulo span {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #6b7280;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.empresa-login-titulo h2 {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 34px;
+  font-weight: 700;
+
+  letter-spacing: -1px;
+}
+
+.empresa-login-titulo p {
+  margin: 10px 0 0;
+
+  color: #6b7280;
+
+  font-size: 15px;
+}
+
+/* =========================================
+   CAMPOS
+========================================= */
+
+.empresa-login-campo {
+  margin-bottom: 21px;
+}
+
+.empresa-login-campo label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #374151;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.empresa-login-campo input {
+  width: 100%;
+
+  height: 54px;
+
+  padding: 0 16px;
+
+  border: 1px solid #d9dde5;
+  border-radius: 12px;
+
+  background: white;
+
+  color: #111827;
+
+  font-size: 15px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.empresa-login-campo input::placeholder {
+  color: #9ca3af;
+}
+
+.empresa-login-campo input:focus {
+  border-color: #111827;
+
+  box-shadow:
+    0 0 0 4px rgba(17, 24, 39, 0.08);
+}
+
+/* =========================================
+   ERRO
+========================================= */
+
+.empresa-login-mensagem {
+  margin-bottom: 18px;
+
+  padding: 12px 14px;
+
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+
+  background: #fef2f2;
+
+  color: #b91c1c;
+
+  font-size: 14px;
+}
+
+/* =========================================
+   BOTÃO
+========================================= */
+
+.empresa-login-botao {
+  width: 100%;
+  height: 54px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: #111827;
+
+  color: white;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.empresa-login-botao:hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 8px 20px rgba(17, 24, 39, 0.18);
+}
+
+.empresa-login-botao:active {
+  transform: translateY(0);
+}
+
+.empresa-login-botao:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* =========================================
+   RODAPÉ
+========================================= */
+
+.empresa-login-rodape {
+  margin-top: 30px;
+
+  text-align: center;
+
+  color: #9ca3af;
+
+  font-size: 13px;
+}
+
+/* =========================================
+   LOADING
+========================================= */
+
+.empresa-login-loading {
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #f7f8fa;
+
+  color: #6b7280;
+}
+
+.empresa-login-spinner {
+  width: 38px;
+  height: 38px;
+
+  margin-bottom: 15px;
+
+  border: 3px solid #e5e7eb;
+  border-top-color: #111827;
+
+  border-radius: 50%;
+
+  animation: empresa-login-spin 0.8s linear infinite;
+}
+
+@keyframes empresa-login-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================
+   ERRO DE EMPRESA
+========================================= */
+
+.empresa-login-error-page {
+  min-height: 100vh;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+
+  background: #f7f8fa;
+}
+
+.empresa-login-error-card {
+  width: 100%;
+  max-width: 420px;
+
+  padding: 40px;
+
+  border-radius: 18px;
+
+  background: white;
+
+  text-align: center;
+
+  box-shadow:
+    0 15px 50px rgba(0, 0, 0, 0.08);
+}
+
+.empresa-login-error-card h1 {
+  margin: 0 0 10px;
+
+  color: #111827;
+
+  font-size: 32px;
+}
+
+.empresa-login-error-card p {
+  margin: 0 0 25px;
+
+  color: #6b7280;
+}
+
+.empresa-login-error-card button {
+  height: 46px;
+
+  padding: 0 24px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #111827;
+
+  color: white;
+
+  cursor: pointer;
+}
+
+/* =========================================
+   RESPONSIVO
+========================================= */
+
+@media (max-width: 900px) {
+  .empresa-login-page {
+    display: block;
+  }
+
+  .empresa-login-imagem {
+    width: 100%;
+    min-height: 300px;
+    height: 38vh;
+  }
+
+  .empresa-login-marca {
+    padding: 30px;
+  }
+
+  .empresa-login-marca h1 {
+    font-size: 25px;
+  }
+
+  .empresa-login-logo {
+    width: 65px;
+    height: 65px;
+  }
+
+  .empresa-login-formulario {
+    width: 100%;
+    min-height: auto;
+
+    padding: 45px 25px 35px;
+  }
+}
+
+@media (max-width: 550px) {
+  .empresa-login-imagem {
+    min-height: 250px;
+    height: 32vh;
+  }
+
+  .empresa-login-marca {
+    gap: 14px;
+    padding: 22px;
+  }
+
+  .empresa-login-logo {
+    width: 55px;
+    height: 55px;
+    border-radius: 14px;
+  }
+
+  .empresa-login-marca h1 {
+    font-size: 20px;
+  }
+
+  .empresa-login-marca p {
+    font-size: 12px;
+  }
+
+  .empresa-login-formulario {
+    padding: 35px 20px;
+  }
+
+  .empresa-login-titulo h2 {
+    font-size: 28px;
+  }
+}
+
