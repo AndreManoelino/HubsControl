@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import Sidebar from './components/Sidebar/Sidebar'
 import Header from './components/Header/Header'
 import { menusEmpresa } from './config/menuConfig'
-import { api } from '../../../../api/api'
+import { api } from "../../api/api";
 import './EmpresaPainel.css'
 
 function EmpresaPainel() {
