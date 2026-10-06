@@ -185,24 +185,44 @@ public class EstoqueService
         return estoque;
     }
 
-    public async Task<Estoque?> ObterAsync(
+    public async Task<EstoqueResponseDto?> ObterAsync(
         Guid empresaId,
         Guid produtoId)
     {
         return await _context.Estoques
-            .Include(x => x.Produto)
-            .FirstOrDefaultAsync(x =>
+            .AsNoTracking()
+            .Where(x =>
                 x.EmpresaId == empresaId &&
-                x.ProdutoId == produtoId);
+                x.ProdutoId == produtoId)
+            .Select(x => new EstoqueResponseDto
+            {
+                Id = x.Id,
+                EmpresaId = x.EmpresaId,
+                ProdutoId = x.ProdutoId,
+                NomeProduto = x.Produto.Nome,
+                Quantidade = x.Quantidade,
+                QuantidadeMinima = x.QuantidadeMinima,
+                AtualizadoEm = x.AtualizadoEm
+            })
+            .FirstOrDefaultAsync();
     }
-
-    public async Task<List<Estoque>> ListarAsync(
+    public async Task<List<EstoqueResponseDto>> ListarAsync(
         Guid empresaId)
     {
         return await _context.Estoques
-            .Include(x => x.Produto)
+            .AsNoTracking()
             .Where(x => x.EmpresaId == empresaId)
             .OrderBy(x => x.Produto.Nome)
+            .Select(x => new EstoqueResponseDto
+            {
+                Id = x.Id,
+                EmpresaId = x.EmpresaId,
+                ProdutoId = x.ProdutoId,
+                NomeProduto = x.Produto.Nome,
+                Quantidade = x.Quantidade,
+                QuantidadeMinima = x.QuantidadeMinima,
+                AtualizadoEm = x.AtualizadoEm
+            })
             .ToListAsync();
     }
 
