@@ -1,4 +1,4 @@
-import { menusEmpresa } from '../../config/menuConfig'
+import { menusEmpresa } from '../../config/menuconfig'
 import './Sidebar.css'
 
 function Sidebar({
