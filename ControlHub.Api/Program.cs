@@ -52,6 +52,13 @@ builder.Services.AddDbContext<ControlHubDbContext>(options =>
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<EmpresaService>();
 builder.Services.AddScoped<UsuarioService>();
+builder.Services.AddScoped<SecaoService>();
+builder.Services.AddScoped<ProdutoService>();
+builder.Services.AddScoped<EstoqueService>();
+builder.Services.AddScoped<FornecedorService>();
+builder.Services.AddScoped<CompraFornecedorService>();
+builder.Services.AddScoped<VendaService>();
+builder.Services.AddScoped<MovimentacaoFinanceiraService>();
 builder.Services.AddControllers();
 
 // ==========================================

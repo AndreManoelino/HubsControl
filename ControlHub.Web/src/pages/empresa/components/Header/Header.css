@@ -1,0 +1,59 @@
+.empresa-header {
+  height: 72px;
+  padding: 0 24px;
+  background: #111827;
+  border-bottom: 1px solid #1f2937;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.empresa-header-menu {
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 8px;
+  background: #1f2937;
+  color: #ffffff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.empresa-header-menu:hover {
+  background: #374151;
+}
+
+.empresa-header-direita {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.empresa-header-usuario {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+}
+
+.empresa-header-usuario strong {
+  color: #ffffff;
+  font-size: 14px;
+}
+
+.empresa-header-usuario span {
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+.empresa-header-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #2563eb;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}

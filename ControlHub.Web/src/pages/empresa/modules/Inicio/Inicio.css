@@ -1,0 +1,87 @@
+.inicio {
+  width: 100%;
+}
+
+.inicio-cabecalho {
+  margin-bottom: 24px;
+}
+
+.inicio-cabecalho h1 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 28px;
+}
+
+.inicio-cabecalho p {
+  margin: 6px 0 0;
+  color: #9ca3af;
+}
+
+.inicio-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.inicio-card {
+  background: #111827;
+  border: 1px solid #1f2937;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.inicio-card span {
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+.inicio-card strong {
+  color: #ffffff;
+  font-size: 24px;
+}
+
+.inicio-conteudo {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+}
+
+.inicio-bloco {
+  background: #111827;
+  border: 1px solid #1f2937;
+  border-radius: 12px;
+  padding: 20px;
+  min-height: 180px;
+}
+
+.inicio-bloco h2 {
+  margin: 0 0 12px;
+  color: #ffffff;
+  font-size: 17px;
+}
+
+.inicio-bloco p {
+  margin: 0;
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+@media (max-width: 900px) {
+  .inicio-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .inicio-conteudo {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .inicio-cards {
+    grid-template-columns: 1fr;
+  }
+}

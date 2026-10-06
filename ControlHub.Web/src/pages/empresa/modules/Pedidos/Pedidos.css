@@ -1,0 +1,74 @@
+.pedidos {
+  width: 100%;
+}
+
+.pedidos-cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.pedidos h1 {
+  margin: 0;
+  color: #fff;
+  font-size: 28px;
+}
+
+.pedidos p {
+  color: #9ca3af;
+}
+
+.pedidos-novo {
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #fff;
+  cursor: pointer;
+}
+
+.pedidos-filtros {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.pedidos-filtros button {
+  padding: 9px 14px;
+  border: 1px solid #374151;
+  border-radius: 8px;
+  background: #111827;
+  color: #9ca3af;
+  cursor: pointer;
+}
+
+.pedidos-filtros button.ativo,
+.pedidos-filtros button:hover {
+  background: #2563eb;
+  color: #fff;
+}
+
+.pedidos-vazio {
+  min-height: 300px;
+  border: 1px solid #1f2937;
+  border-radius: 12px;
+  background: #111827;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.pedidos-vazio-icone {
+  font-size: 40px;
+}
+
+.pedidos-vazio h2 {
+  color: #fff;
+}
+
+.pedidos-vazio p {
+  color: #9ca3af;
+}

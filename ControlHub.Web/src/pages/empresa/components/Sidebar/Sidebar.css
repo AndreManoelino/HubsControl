@@ -1,0 +1,121 @@
+.empresa-sidebar {
+  width: 250px;
+  height: 100vh;
+  background: #111827;
+  border-right: 1px solid #1f2937;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.25s ease;
+  flex-shrink: 0;
+}
+
+.empresa-sidebar.fechada {
+  width: 72px;
+}
+
+.empresa-sidebar-topo {
+  height: 72px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #1f2937;
+}
+
+.empresa-sidebar-titulo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow: hidden;
+}
+
+.empresa-sidebar-titulo strong {
+  color: #ffffff;
+  font-size: 18px;
+  white-space: nowrap;
+}
+
+.empresa-sidebar-titulo span {
+  color: #9ca3af;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
+.empresa-sidebar-toggle {
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 8px;
+  background: #1f2937;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.empresa-sidebar-toggle:hover {
+  background: #374151;
+}
+
+.empresa-menu {
+  flex: 1;
+  padding: 16px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.empresa-menu-item {
+  width: 100%;
+  height: 46px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 12px;
+  cursor: pointer;
+  text-align: left;
+  transition: 0.2s;
+}
+
+.empresa-menu-item:hover {
+  background: #1f2937;
+  color: #ffffff;
+}
+
+.empresa-menu-item.ativo {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.empresa-menu-icone {
+  width: 24px;
+  min-width: 24px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.empresa-menu-texto {
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.empresa-sidebar.fechada .empresa-menu-item {
+  justify-content: center;
+  padding: 0;
+}
+
+.empresa-sidebar-rodape {
+  padding: 10px;
+  border-top: 1px solid #1f2937;
+}
+
+.empresa-sair:hover {
+  background: #3f1d1d;
+  color: #f87171;
+}
