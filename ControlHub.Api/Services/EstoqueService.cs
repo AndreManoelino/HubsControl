@@ -1,3 +1,4 @@
+
 using ControlHub.Api.Data;
 using ControlHub.Api.DTOs.Estoque;
 using ControlHub.Api.Models;
@@ -14,7 +15,7 @@ public class EstoqueService
         _context = context;
     }
 
-    public async Task<Estoque> EntradaAsync(
+    public async Task<EstoqueResponseDto> EntradaAsync(
         Guid empresaId,
         MovimentarEstoqueDto dto)
     {
@@ -51,6 +52,7 @@ public class EstoqueService
 
         estoque.Quantidade += dto.Quantidade;
         estoque.AtualizadoEm = DateTime.UtcNow;
+        estoque.Produto = produto;
 
         _context.MovimentacoesEstoque.Add(
             new MovimentacaoEstoque
@@ -68,10 +70,10 @@ public class EstoqueService
 
         await _context.SaveChangesAsync();
 
-        return estoque;
+        return CriarResponse(estoque);
     }
 
-    public async Task<Estoque> SaidaAsync(
+    public async Task<EstoqueResponseDto> SaidaAsync(
         Guid empresaId,
         MovimentarEstoqueDto dto)
     {
@@ -112,6 +114,7 @@ public class EstoqueService
 
         estoque.Quantidade -= dto.Quantidade;
         estoque.AtualizadoEm = DateTime.UtcNow;
+        estoque.Produto = produto;
 
         _context.MovimentacoesEstoque.Add(
             new MovimentacaoEstoque
@@ -129,10 +132,10 @@ public class EstoqueService
 
         await _context.SaveChangesAsync();
 
-        return estoque;
+        return CriarResponse(estoque);
     }
 
-    public async Task<Estoque> AjustarAsync(
+    public async Task<EstoqueResponseDto> AjustarAsync(
         Guid empresaId,
         AjustarEstoqueDto dto)
     {
@@ -165,6 +168,7 @@ public class EstoqueService
 
         estoque.Quantidade = dto.NovaQuantidade;
         estoque.AtualizadoEm = DateTime.UtcNow;
+        estoque.Produto = produto;
 
         _context.MovimentacoesEstoque.Add(
             new MovimentacaoEstoque
@@ -173,7 +177,8 @@ public class EstoqueService
                 EmpresaId = empresaId,
                 ProdutoId = dto.ProdutoId,
                 Tipo = TipoMovimentacaoEstoque.Ajuste,
-                Quantidade = Math.Abs(dto.NovaQuantidade - anterior),
+                Quantidade = Math.Abs(
+                    dto.NovaQuantidade - anterior),
                 QuantidadeAnterior = anterior,
                 QuantidadeAtual = dto.NovaQuantidade,
                 Observacao = dto.Observacao?.Trim(),
@@ -182,7 +187,7 @@ public class EstoqueService
 
         await _context.SaveChangesAsync();
 
-        return estoque;
+        return CriarResponse(estoque);
     }
 
     public async Task<EstoqueResponseDto?> ObterAsync(
@@ -206,6 +211,7 @@ public class EstoqueService
             })
             .FirstOrDefaultAsync();
     }
+
     public async Task<List<EstoqueResponseDto>> ListarAsync(
         Guid empresaId)
     {
@@ -236,6 +242,21 @@ public class EstoqueService
                 x.ProdutoId == produtoId)
             .OrderByDescending(x => x.CriadaEm)
             .ToListAsync();
+    }
+
+    private EstoqueResponseDto CriarResponse(
+        Estoque estoque)
+    {
+        return new EstoqueResponseDto
+        {
+            Id = estoque.Id,
+            EmpresaId = estoque.EmpresaId,
+            ProdutoId = estoque.ProdutoId,
+            NomeProduto = estoque.Produto?.Nome ?? string.Empty,
+            Quantidade = estoque.Quantidade,
+            QuantidadeMinima = estoque.QuantidadeMinima,
+            AtualizadoEm = estoque.AtualizadoEm
+        };
     }
 
     private async Task<Estoque?> ObterEstoqueAsync(
