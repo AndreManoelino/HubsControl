@@ -94,7 +94,26 @@ public class ProdutosController : ControllerBase
                 id,
                 dto);
 
-            return Ok(produto);
+            return Ok(new
+            {
+                produto.Id,
+                produto.EmpresaId,
+                produto.SecaoId,
+                produto.Nome,
+                produto.Descricao,
+                produto.PrecoVenda,
+                produto.ImagemUrl,
+                produto.ImagemArquivo,
+                produto.ControlaEstoque,
+                produto.Ativo,
+                produto.CriadoEm,
+                QuantidadeEstoque = produto.ControlaEstoque
+                    ? produto.Estoque?.Quantidade
+                    : null,
+                QuantidadeMinima = produto.ControlaEstoque
+                    ? produto.Estoque?.QuantidadeMinima
+                    : null
+            });
         }
         catch (InvalidOperationException ex)
         {

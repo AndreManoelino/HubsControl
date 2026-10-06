@@ -86,23 +86,23 @@ export default function Produtos() {
   }
 
   function abrirEditarProduto(produto) {
-    setModoEdicao(true);
-    setProdutoSelecionado(produto);
+      setModoEdicao(true);
+      setProdutoSelecionado(produto);
 
-    setFormulario({
-      secaoId: produto.secaoId,
-      nome: produto.nome,
-      descricao: produto.descricao || "",
-      precoVenda: produto.precoVenda,
-      imagemUrl: produto.imagemUrl || "",
-      controlaEstoque: produto.controlaEstoque,
-      quantidadeInicial: "",
-      quantidadeMinima: "",
-    });
+      setFormulario({
+          secaoId: produto.secaoId,
+          nome: produto.nome,
+          descricao: produto.descricao || "",
+          precoVenda: produto.precoVenda,
+          imagemUrl: produto.imagemUrl || "",
+          controlaEstoque: produto.controlaEstoque,
+          quantidadeInicial: "",
+          quantidadeMinima: produto.quantidadeMinima ?? "",
+      });
 
-    setErro("");
-    setMensagem("");
-    setModalAberto(true);
+      setErro("");
+      setMensagem("");
+      setModalAberto(true);
   }
 
   function fecharModal() {
