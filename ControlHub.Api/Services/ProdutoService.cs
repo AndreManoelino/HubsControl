@@ -105,12 +105,32 @@ public class ProdutoService
         return produto;
     }
 
-    public async Task<List<Produto>> ListarAsync(Guid empresaId)
+    public async Task<List<ProdutoResponseDto>> ListarAsync(Guid empresaId)
     {
         return await _context.Produtos
-            .Include(x => x.Estoque)
+            .AsNoTracking()
             .Where(x => x.EmpresaId == empresaId)
             .OrderBy(x => x.Nome)
+            .Select(x => new ProdutoResponseDto
+            {
+                Id = x.Id,
+                EmpresaId = x.EmpresaId,
+                SecaoId = x.SecaoId,
+                Nome = x.Nome,
+                Descricao = x.Descricao,
+                PrecoVenda = x.PrecoVenda,
+                ImagemUrl = x.ImagemUrl,
+                ImagemArquivo = x.ImagemArquivo,
+                ControlaEstoque = x.ControlaEstoque,
+                Ativo = x.Ativo,
+                CriadoEm = x.CriadoEm,
+                QuantidadeEstoque = x.ControlaEstoque
+                    ? x.Estoque!.Quantidade
+                    : null,
+                QuantidadeMinima = x.ControlaEstoque
+                    ? x.Estoque!.QuantidadeMinima
+                    : null
+            })
             .ToListAsync();
     }
 

@@ -28,7 +28,20 @@ public class ProdutosController : ControllerBase
                 empresaId,
                 dto);
 
-            return Ok(produto);
+            return Ok(new
+            {
+                produto.Id,
+                produto.EmpresaId,
+                produto.SecaoId,
+                produto.Nome,
+                produto.Descricao,
+                produto.PrecoVenda,
+                produto.ImagemUrl,
+                produto.ImagemArquivo,
+                produto.ControlaEstoque,
+                produto.Ativo,
+                produto.CriadoEm
+            });
         }
         catch (InvalidOperationException ex)
         {

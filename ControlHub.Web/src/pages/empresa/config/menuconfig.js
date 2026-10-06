@@ -1,4 +1,5 @@
 import Inicio from '../modules/Inicio/Inicio'
+import Secoes from '../modules/Secoes/Secoes'
 import Pedidos from '../modules/Pedidos/Pedidos'
 import Produtos from '../modules/Produtos/Produtos'
 import Estoque from '../modules/Estoque/Estoque'
@@ -12,6 +13,12 @@ export const menusEmpresa = [
     nome: 'Início',
     icone: '⌂',
     componente: Inicio,
+  },
+  {
+    id: 'secoes',
+    nome: 'Seções',
+    icone: '☰',
+    componente: Secoes,
   },
   {
     id: 'pedidos',

@@ -1,11 +1,11 @@
-//const API_URL = "http://localhost:5162/api";
 const API_URL = import.meta.env.VITE_API_URL;
+
 console.log("API_URL:", API_URL);
 
 async function request(endpoint, options = {}) {
     const token = localStorage.getItem("controlhub_token");
 
-    const response = await fetch(`${API_URL}${endpoint}`, {
+    const response = await fetch(`${API_URL}/api${endpoint}`, {
         ...options,
         headers: {
             "Content-Type": "application/json",

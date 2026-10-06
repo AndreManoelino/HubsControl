@@ -22,7 +22,9 @@ public class ProdutoResponseDto
 
     public bool Ativo { get; set; }
 
+    public DateTime CriadoEm { get; set; }
+
     public decimal? QuantidadeEstoque { get; set; }
 
-    public DateTime CriadoEm { get; set; }
+    public decimal? QuantidadeMinima { get; set; }
 }
