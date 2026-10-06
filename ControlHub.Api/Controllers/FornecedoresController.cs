@@ -1,4 +1,4 @@
-using ControlHub.Api.DTOs.Produtos;
+using ControlHub.Api.DTOs.Fornecedores;
 using ControlHub.Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,27 +8,28 @@ namespace ControlHub.Api.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Authorize(Roles = "Dono")]
-public class ProdutosController : ControllerBase
+public class FornecedoresController : ControllerBase
 {
-    private readonly ProdutoService _service;
+    private readonly FornecedorService _service;
 
-    public ProdutosController(ProdutoService service)
+    public FornecedoresController(FornecedorService service)
     {
         _service = service;
     }
 
     [HttpPost]
-    public async Task<IActionResult> Criar(CriarProdutoDto dto)
+    public async Task<IActionResult> Criar(
+        CriarFornecedorDto dto)
     {
         try
         {
             var empresaId = ObterEmpresaId();
 
-            var produto = await _service.CriarAsync(
+            var fornecedor = await _service.CriarAsync(
                 empresaId,
                 dto);
 
-            return Ok(produto);
+            return Ok(fornecedor);
         }
         catch (InvalidOperationException ex)
         {
@@ -44,9 +45,10 @@ public class ProdutosController : ControllerBase
     {
         var empresaId = ObterEmpresaId();
 
-        var produtos = await _service.ListarAsync(empresaId);
+        var fornecedores = await _service.ListarAsync(
+            empresaId);
 
-        return Ok(produtos);
+        return Ok(fornecedores);
     }
 
     [HttpGet("{id:guid}")]
@@ -54,34 +56,34 @@ public class ProdutosController : ControllerBase
     {
         var empresaId = ObterEmpresaId();
 
-        var produto = await _service.ObterPorIdAsync(
+        var fornecedor = await _service.ObterPorIdAsync(
             empresaId,
             id);
 
-        if (produto is null)
+        if (fornecedor is null)
             return NotFound(new
             {
-                mensagem = "Produto não encontrado."
+                mensagem = "Fornecedor não encontrado."
             });
 
-        return Ok(produto);
+        return Ok(fornecedor);
     }
 
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Atualizar(
         Guid id,
-        AtualizarProdutoDto dto)
+        AtualizarFornecedorDto dto)
     {
         try
         {
             var empresaId = ObterEmpresaId();
 
-            var produto = await _service.AtualizarAsync(
+            var fornecedor = await _service.AtualizarAsync(
                 empresaId,
                 id,
                 dto);
 
-            return Ok(produto);
+            return Ok(fornecedor);
         }
         catch (InvalidOperationException ex)
         {
@@ -93,9 +95,7 @@ public class ProdutosController : ControllerBase
     }
 
     [HttpPut("{id:guid}/bloquear")]
-    public async Task<IActionResult> Bloquear(
-        Guid id,
-        BloquearProdutoDto dto)
+    public async Task<IActionResult> Bloquear(Guid id)
     {
         try
         {
@@ -103,12 +103,11 @@ public class ProdutosController : ControllerBase
 
             await _service.BloquearAsync(
                 empresaId,
-                id,
-                dto);
+                id);
 
             return Ok(new
             {
-                mensagem = "Produto bloqueado com sucesso."
+                mensagem = "Fornecedor bloqueado com sucesso."
             });
         }
         catch (InvalidOperationException ex)
