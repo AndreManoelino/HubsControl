@@ -493,3 +493,19 @@
         width: 100%;
     }
 }
+
+.btn-activate {
+    background: #ecfdf3;
+    color: #067647;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn-activate:hover {
+    background: #d1fadf;
+}

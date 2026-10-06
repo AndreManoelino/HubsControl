@@ -215,7 +215,29 @@ export default function Produtos() {
       setErro(error.message);
     }
   }
+  async function ativarProduto(produto) {
+    const confirmar = window.confirm(
+      `Deseja ativar o produto "${produto.nome}"?`
+    );
 
+    if (!confirmar) return;
+
+    try {
+      setErro("");
+      setMensagem("");
+
+      await api.put(
+        `/Produtos/${produto.id}/ativar`
+      );
+
+      setMensagem("Produto ativado com sucesso.");
+
+      await carregarDados();
+    } catch (error) {
+      console.error("Erro ao ativar produto:", error);
+      setErro(error.message);
+    }
+  }
   const produtosFiltrados = produtos.filter((produto) => {
     const texto = busca.toLowerCase();
 
@@ -397,7 +419,7 @@ export default function Produtos() {
                         Editar
                       </button>
 
-                      {produto.ativo && (
+                      {produto.ativo ? (
                         <button
                           className="btn-delete"
                           onClick={() =>
@@ -406,7 +428,17 @@ export default function Produtos() {
                         >
                           Bloquear
                         </button>
+                      ) : (
+                        <button
+                          className="btn-activate"
+                          onClick={() =>
+                            ativarProduto(produto)
+                          }
+                        >
+                          Ativar
+                        </button>
                       )}
+                    
                     </div>
                   </td>
                 </tr>

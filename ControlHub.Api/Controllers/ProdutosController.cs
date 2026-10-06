@@ -162,4 +162,28 @@ public class ProdutosController : ControllerBase
 
         return empresaId;
     }
+    [HttpPut("{id:guid}/ativar")]
+    public async Task<IActionResult> Ativar(Guid id)
+    {
+        try
+        {
+            var empresaId = ObterEmpresaId();
+
+            await _service.AtivarAsync(
+                empresaId,
+                id);
+
+            return Ok(new
+            {
+                mensagem = "Produto ativado com sucesso."
+            });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new
+            {
+                mensagem = ex.Message
+            });
+        }
+    }
 }

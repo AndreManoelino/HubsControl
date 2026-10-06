@@ -266,4 +266,22 @@ public class ProdutoService
 
         await _context.SaveChangesAsync();
     }
+    public async Task AtivarAsync(
+        Guid empresaId,
+        Guid id)
+    {
+        var produto = await ObterPorIdAsync(empresaId, id);
+
+        if (produto is null)
+            throw new InvalidOperationException(
+                "Produto não encontrado.");
+
+        if (produto.Ativo)
+            throw new InvalidOperationException(
+                "O produto já está ativo.");
+
+        produto.Ativo = true;
+
+        await _context.SaveChangesAsync();
+    }
 }
