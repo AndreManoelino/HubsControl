@@ -414,3 +414,20 @@
              { display: block; margin-bottom: 8px; color: #343943; font-size: 12px; font-weight: 650; } .secoes-modal-body input 
              { display: block; width: 100%; height: 44px; padding: 0 12px; box-sizing: border-box; border: 1px solid #d7dbe0; border-radius: 7px; outline: none; background: #ffffff; color: #1c2028; font-family: inherit; font-size: 13px; transition: 0.15s ease; } .secoes-modal-body input::placeholder { color: #a4a9b1; } .secoes-modal-body input:focus { border-color: #68707c; box-shadow: 0 0 0 3px rgba(104, 112, 124, 0.1); } .secoes-modal-body small { display: block; margin-top: 8px; color: #9298a2; font-size: 10px; } .secoes-modal-alerta { margin-top: 15px; padding: 10px 12px; border: 1px solid #fecaca; border-radius: 6px; background: #fff1f2; color: #b42318; font-size: 12px; } /* MODAL FOOTER */ .secoes-modal-footer { display: flex; justify-content: flex-end; gap: 9px; padding: 16px 24px 20px; border-top: 1px solid #e8eaed; background: #fafbfc; } .secoes-btn-cancelar, .secoes-btn-salvar { display: flex; align-items: center; justify-content: center; height: 40px; min-width: 100px; padding: 0 15px; border-radius: 7px; font-family: inherit; font-size: 12px; font-weight: 650; cursor: pointer; } .secoes-btn-cancelar { border: 1px solid #dfe2e6; background: #ffffff; color: #4d535d; } .secoes-btn-cancelar:hover { background: #f4f5f6; } .secoes-btn-salvar { min-width: 130px; gap: 8px; border: 0; background: #151922; color: #ffffff; } .secoes-btn-salvar:hover { background: #292f3b; } .secoes-btn-cancelar:disabled, .secoes-btn-salvar:disabled { opacity: 0.6; cursor: not-allowed; } .secoes-btn-spinner { width: 13px; height: 13px; border: 2px solid rgba(255, 255, 255, 0.4); border-top-color: #ffffff; border-radius: 50%; animation: secoes-spin 0.7s linear infinite; } /* RESPONSIVO */ @media (max-width: 900px) { .secoes-page { padding: 24px; } .secoes-cards { grid-template-columns: 1fr; } } @media (max-width: 650px) { .secoes-page { padding: 18px; } .secoes-header { align-items: stretch; flex-direction: column; } .secoes-btn-principal { justify-content: center; width: 100%; } .secoes-modal-overlay { padding: 12px; } .secoes-modal-header, .secoes-modal-body { padding-left: 18px; padding-right: 18px; } 
 .secoes-modal-footer { padding-left: 18px; padding-right: 18px; } .secoes-btn-cancelar, .secoes-btn-salvar { flex: 1; } }
+
+
+.secoes-btn-ativar {
+  background: #ecfdf3;
+  color: #067647;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.secoes-btn-ativar:hover {
+  background: #d1fadf;
+}

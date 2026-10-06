@@ -113,4 +113,22 @@ public class SecaoService
 
         await _context.SaveChangesAsync();
     }
+    public async Task AtivarAsync(
+        Guid empresaId,
+        Guid id)
+    {
+        var secao = await ObterPorIdAsync(empresaId, id);
+
+        if (secao is null)
+            throw new InvalidOperationException(
+                "Seção não encontrada.");
+
+        if (secao.Ativa)
+            throw new InvalidOperationException(
+                "A seção já está ativa.");
+
+        secao.Ativa = true;
+
+        await _context.SaveChangesAsync();
+    }
 }

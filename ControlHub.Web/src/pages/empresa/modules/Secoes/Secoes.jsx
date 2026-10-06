@@ -106,7 +106,23 @@ function Secoes() {
       setErro(error.message)
     }
   }
+  async function ativar(secao) {
+    const confirmar = window.confirm(
+      `Deseja ativar a seção "${secao.nome}"?`
+    )
 
+    if (!confirmar) return
+
+    try {
+      setErro('')
+
+      await api.put(`/Secoes/${secao.id}/ativar`)
+
+      await carregarSecoes()
+    } catch (error) {
+      setErro(error.message)
+    }
+  }
   const total = secoes.length
   const ativas = secoes.filter((secao) => secao.ativa).length
   const bloqueadas = secoes.filter((secao) => !secao.ativa).length
@@ -302,13 +318,21 @@ function Secoes() {
                           Editar
                         </button>
 
-                        {secao.ativa && (
+                        {secao.ativa ? (
                           <button
                             type="button"
                             className="secoes-btn-bloquear"
                             onClick={() => bloquear(secao)}
                           >
                             Bloquear
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            className="secoes-btn-ativar"
+                            onClick={() => ativar(secao)}
+                          >
+                            Ativar
                           </button>
                         )}
 
