@@ -4,6 +4,7 @@ using Microsoft.OpenApi.Models;
 using DotNetEnv;
 using ControlHub.Api.Data;
 using ControlHub.Api.Services;
+using ControlHub.Api.Services.Relatorios;
 Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
@@ -59,6 +60,8 @@ builder.Services.AddScoped<FornecedorService>();
 builder.Services.AddScoped<CompraFornecedorService>();
 builder.Services.AddScoped<VendaService>();
 builder.Services.AddScoped<MovimentacaoFinanceiraService>();
+builder.Services.AddScoped<FinanceiroDashboardService>();
+builder.Services.AddScoped<RelatorioFinanceiroService>();
 builder.Services.AddControllers();
 
 // ==========================================
