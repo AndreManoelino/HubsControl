@@ -100,11 +100,10 @@ public class FinanceiroDashboardController : ControllerBase
         {
             var empresaId = ObterEmpresaId();
 
-            var arquivo =
-                await _relatorioService.GerarPdfAsync(
-                    empresaId,
-                    dataInicio,
-                    dataFim);
+            var arquivo = await _relatorioService.GerarPdfAsync(
+                empresaId,
+                dataInicio,
+                dataFim);
 
             var nomeArquivo =
                 $"relatorio-financeiro-{DateTime.UtcNow:yyyyMMddHHmmss}.pdf";
@@ -114,12 +113,20 @@ public class FinanceiroDashboardController : ControllerBase
                 "application/pdf",
                 nomeArquivo);
         }
-        catch (InvalidOperationException ex)
+        catch (Exception ex)
         {
-            return BadRequest(new
-            {
-                mensagem = ex.Message
-            });
+            Console.WriteLine("======================================");
+            Console.WriteLine("ERRO AO GERAR PDF");
+            Console.WriteLine(ex.ToString());
+            Console.WriteLine("======================================");
+
+            return StatusCode(
+                500,
+                new
+                {
+                    mensagem = "Erro ao gerar o PDF.",
+                    detalhe = ex.Message
+                });
         }
     }
 

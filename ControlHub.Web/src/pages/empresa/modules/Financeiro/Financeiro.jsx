@@ -158,71 +158,104 @@ function Financeiro() {
     try {
       setErro('')
 
-      const token = localStorage.getItem(
-        'controlhub_token'
-      )
-
+      const token = localStorage.getItem('controlhub_token')
       const apiUrl = import.meta.env.VITE_API_URL
 
-      const response = await fetch(
-        `${apiUrl}/api/FinanceiroDashboard/exportar/${tipo}?dataInicio=${dataInicio}&dataFim=${dataFim}`,
-        {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      if (!token) {
+        throw new Error('Sessão expirada. Faça login novamente.')
+      }
+
+      const extensao =
+        tipo === 'pdf'
+          ? 'pdf'
+          : tipo === 'excel'
+            ? 'xlsx'
+            : 'csv'
+
+      const url =
+        `${apiUrl}/api/FinanceiroDashboard/exportar/${tipo}` +
+        `?dataInicio=${encodeURIComponent(dataInicio)}` +
+        `&dataFim=${encodeURIComponent(dataFim)}`
+
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
 
       if (!response.ok) {
+        let mensagem = 'Não foi possível gerar o relatório.'
+
         const contentType =
-          response.headers.get('content-type')
+          response.headers.get('content-type') || ''
 
-        if (
-          contentType?.includes('application/json')
-        ) {
-          const data = await response.json()
+        if (contentType.includes('application/json')) {
+          try {
+            const data = await response.json()
 
-          throw new Error(
-            data?.mensagem ||
-              'Não foi possível gerar o relatório.'
-          )
+            mensagem =
+              data?.mensagem ||
+              data?.message ||
+              mensagem
+          } catch {
+            // mantém mensagem padrão
+          }
+        } else {
+          try {
+            const texto = await response.text()
+
+            if (texto) {
+              mensagem = texto
+            }
+          } catch {
+            // mantém mensagem padrão
+          }
         }
 
         throw new Error(
-          'Não foi possível gerar o relatório.'
+          `Erro ${response.status}: ${mensagem}`
         )
       }
 
       const blob = await response.blob()
 
-      const url = window.URL.createObjectURL(blob)
+      if (!blob || blob.size === 0) {
+        throw new Error(
+          'O servidor retornou um arquivo vazio.'
+        )
+      }
 
-      const link = document.createElement('a')
+      const urlDownload =
+        window.URL.createObjectURL(blob)
 
-      link.href = url
+      const link =
+        document.createElement('a')
+
+      link.href = urlDownload
 
       link.download =
-        `relatorio-financeiro-${dataInicio}-${dataFim}.${tipo === 'pdf'
-          ? 'pdf'
-          : tipo === 'excel'
-            ? 'xlsx'
-            : 'csv'
-        }`
+        `relatorio-financeiro-${dataInicio}-${dataFim}.${extensao}`
 
       document.body.appendChild(link)
 
       link.click()
 
-      link.remove()
+      document.body.removeChild(link)
 
-      window.URL.revokeObjectURL(url)
+      setTimeout(() => {
+        window.URL.revokeObjectURL(urlDownload)
+      }, 1000)
+
     } catch (error) {
-      console.error(error)
+      console.error(
+        'Erro ao exportar relatório:',
+        error
+      )
 
       setErro(
         error.message ||
-          'Não foi possível exportar o relatório.'
+        'Não foi possível exportar o relatório.'
       )
     }
   }

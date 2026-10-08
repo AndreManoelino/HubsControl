@@ -1,3 +1,4 @@
+
 using ControlHub.Api.Data;
 using ControlHub.Api.DTOs.Financeiro;
 using ControlHub.Api.Models;
@@ -29,9 +30,9 @@ public class FinanceiroDashboardService
         var (inicio, fimExclusivo, fim) =
             PrepararPeriodo(dataInicio, dataFim);
 
-        // --------------------------------------------------------
+        // ========================================================
         // MOVIMENTAÇÕES FINANCEIRAS
-        // --------------------------------------------------------
+        // ========================================================
 
         var movimentacoes = await _context
             .MovimentacoesFinanceiras
@@ -51,11 +52,12 @@ public class FinanceiroDashboardService
             .Where(x => !x.Entrada)
             .Sum(x => x.Valor);
 
-        // --------------------------------------------------------
+        // ========================================================
         // VENDAS
-        // --------------------------------------------------------
+        // ========================================================
 
-        var vendas = await _context.Vendas
+        var vendas = await _context
+            .Vendas
             .AsNoTracking()
             .Include(x => x.Itens)
             .Where(x =>
@@ -74,11 +76,12 @@ public class FinanceiroDashboardService
         var lucroBruto =
             totalVendas - custoDasVendas;
 
-        // --------------------------------------------------------
+        // ========================================================
         // COMPRAS
-        // --------------------------------------------------------
+        // ========================================================
 
-        var compras = await _context.ComprasFornecedor
+        var compras = await _context
+            .ComprasFornecedor
             .AsNoTracking()
             .Include(x => x.Fornecedor)
             .Where(x =>
@@ -90,11 +93,12 @@ public class FinanceiroDashboardService
 
         var totalCompras = compras.Sum(x => x.ValorTotal);
 
-        // --------------------------------------------------------
+        // ========================================================
         // ESTOQUE ATUAL
-        // --------------------------------------------------------
+        // ========================================================
 
-        var estoques = await _context.Estoques
+        var estoques = await _context
+            .Estoques
             .AsNoTracking()
             .Include(x => x.Produto)
             .Where(x =>
@@ -108,12 +112,17 @@ public class FinanceiroDashboardService
             .Distinct()
             .ToList();
 
-        // --------------------------------------------------------
+        // ========================================================
         // ÚLTIMO CUSTO DE COMPRA POR PRODUTO
         //
-        // Futuramente poderemos trocar isso por CUSTO MÉDIO.
-        // O Financeiro já está preparado para isso.
-        // --------------------------------------------------------
+        // Atualmente usamos o último custo de compra.
+        //
+        // Futuramente podemos substituir por:
+        // - custo médio ponderado;
+        // - custo médio móvel;
+        // - FIFO;
+        // - outro método contábil.
+        // ========================================================
 
         var ultimosCustos = await _context
             .ItensCompraFornecedor
@@ -137,9 +146,9 @@ public class FinanceiroDashboardService
                 x => x.ProdutoId,
                 x => x.CustoUnitario);
 
-        // --------------------------------------------------------
+        // ========================================================
         // MONTA ESTOQUE FINANCEIRO
-        // --------------------------------------------------------
+        // ========================================================
 
         var estoqueDto =
             new List<FinanceiroProdutoEstoqueDto>();
@@ -168,20 +177,36 @@ public class FinanceiroDashboardService
                 new FinanceiroProdutoEstoqueDto
                 {
                     ProdutoId = produto.Id,
-                    NomeProduto = produto.Nome,
-                    Quantidade = estoque.Quantidade,
-                    PrecoVenda = produto.PrecoVenda,
-                    CustoUnitario = custoUnitario,
-                    CustoTotal = custoTotal,
-                    ValorVendaTotal = valorVendaTotal,
-                    LucroPotencial = lucroPotencial,
-                    Ativo = produto.Ativo
+
+                    NomeProduto =
+                        produto.Nome,
+
+                    Quantidade =
+                        estoque.Quantidade,
+
+                    PrecoVenda =
+                        produto.PrecoVenda,
+
+                    CustoUnitario =
+                        custoUnitario,
+
+                    CustoTotal =
+                        custoTotal,
+
+                    ValorVendaTotal =
+                        valorVendaTotal,
+
+                    LucroPotencial =
+                        lucroPotencial,
+
+                    Ativo =
+                        produto.Ativo
                 });
         }
 
-        // --------------------------------------------------------
+        // ========================================================
         // TOTAIS DO ESTOQUE
-        // --------------------------------------------------------
+        // ========================================================
 
         var custoTotalEstoque =
             estoqueDto.Sum(x => x.CustoTotal);
@@ -195,105 +220,171 @@ public class FinanceiroDashboardService
         var quantidadeTotalEstoque =
             estoqueDto.Sum(x => x.Quantidade);
 
-        // --------------------------------------------------------
+        // ========================================================
         // RESPOSTA
-        // --------------------------------------------------------
+        // ========================================================
 
         return new FinanceiroDashboardDto
         {
             DataInicio = inicio,
+
             DataFim = fim,
 
-            TotalEntradas = totalEntradas,
-            TotalSaidas = totalSaidas,
-            Saldo = totalEntradas - totalSaidas,
+            // ----------------------------------------------------
+            // FINANCEIRO
+            // ----------------------------------------------------
 
-            TotalVendas = totalVendas,
-            QuantidadeVendas = vendas.Count,
+            TotalEntradas =
+                totalEntradas,
 
-            CustoDasVendas = custoDasVendas,
-            LucroBruto = lucroBruto,
+            TotalSaidas =
+                totalSaidas,
 
-            TotalCompras = totalCompras,
-            QuantidadeCompras = compras.Count,
+            Saldo =
+                totalEntradas - totalSaidas,
 
-            CustoTotalEstoque = custoTotalEstoque,
-            ValorVendaEstoque = valorVendaEstoque,
-            LucroPotencialEstoque = lucroPotencialEstoque,
-            QuantidadeTotalEstoque = quantidadeTotalEstoque,
-            ProdutosComEstoque = estoqueDto.Count,
+            // ----------------------------------------------------
+            // VENDAS
+            // ----------------------------------------------------
 
-            UltimasMovimentacoes = movimentacoes
-                .Take(20)
-                .Select(x =>
-                    new FinanceiroMovimentacaoResumoDto
-                    {
-                        Id = x.Id,
-                        Categoria =
-                            x.Categoria.ToString(),
+            TotalVendas =
+                totalVendas,
 
-                        Descricao =
-                            x.Descricao,
+            QuantidadeVendas =
+                vendas.Count,
 
-                        Valor =
-                            x.Valor,
+            CustoDasVendas =
+                custoDasVendas,
 
-                        Entrada =
-                            x.Entrada,
+            LucroBruto =
+                lucroBruto,
 
-                        CriadaEm =
-                            x.CriadaEm
-                    })
-                .ToList(),
+            // ----------------------------------------------------
+            // COMPRAS
+            // ----------------------------------------------------
 
-            Estoque = estoqueDto,
+            TotalCompras =
+                totalCompras,
 
-            Vendas = vendas
-                .Take(100)
-                .Select(x =>
-                    new FinanceiroVendaResumoDto
-                    {
-                        Id = x.Id,
-                        ValorTotal = x.ValorTotal,
+            QuantidadeCompras =
+                compras.Count,
 
-                        CustoTotal =
-                            x.Itens.Sum(i =>
-                                i.CustoTotal),
+            // ----------------------------------------------------
+            // ESTOQUE
+            // ----------------------------------------------------
 
-                        Lucro =
-                            x.Itens.Sum(i =>
-                                i.Lucro),
+            CustoTotalEstoque =
+                custoTotalEstoque,
 
-                        CriadaEm =
-                            x.CriadaEm
-                    })
-                .ToList(),
+            ValorVendaEstoque =
+                valorVendaEstoque,
 
-            Compras = compras
-                .Take(100)
-                .Select(x =>
-                    new FinanceiroCompraResumoDto
-                    {
-                        Id = x.Id,
-                        FornecedorId =
-                            x.FornecedorId,
+            LucroPotencialEstoque =
+                lucroPotencialEstoque,
 
-                        NomeFornecedor =
-                            x.Fornecedor.Nome,
+            QuantidadeTotalEstoque =
+                quantidadeTotalEstoque,
 
-                        NumeroNota =
-                            x.NumeroNota,
+            ProdutosComEstoque =
+                estoqueDto.Count,
 
-                        ValorTotal =
-                            x.ValorTotal,
+            // ----------------------------------------------------
+            // ÚLTIMAS MOVIMENTAÇÕES
+            // ----------------------------------------------------
 
-                        DataCompra =
-                            x.DataCompra
-                    })
-                .ToList()
+            UltimasMovimentacoes =
+                movimentacoes
+                    .Take(20)
+                    .Select(x =>
+                        new FinanceiroMovimentacaoResumoDto
+                        {
+                            Id =
+                                x.Id,
+
+                            Categoria =
+                                x.Categoria.ToString(),
+
+                            Descricao =
+                                x.Descricao,
+
+                            Valor =
+                                x.Valor,
+
+                            Entrada =
+                                x.Entrada,
+
+                            CriadaEm =
+                                x.CriadaEm
+                        })
+                    .ToList(),
+
+            // ----------------------------------------------------
+            // ESTOQUE
+            // ----------------------------------------------------
+
+            Estoque =
+                estoqueDto,
+
+            // ----------------------------------------------------
+            // VENDAS
+            // ----------------------------------------------------
+
+            Vendas =
+                vendas
+                    .Take(100)
+                    .Select(x =>
+                        new FinanceiroVendaResumoDto
+                        {
+                            Id =
+                                x.Id,
+
+                            ValorTotal =
+                                x.ValorTotal,
+
+                            CustoTotal =
+                                x.Itens.Sum(i =>
+                                    i.CustoTotal),
+
+                            Lucro =
+                                x.Itens.Sum(i =>
+                                    i.Lucro),
+
+                            CriadaEm =
+                                x.CriadaEm
+                        })
+                    .ToList(),
+
+            // ----------------------------------------------------
+            // COMPRAS
+            // ----------------------------------------------------
+
+            Compras =
+                compras
+                    .Take(100)
+                    .Select(x =>
+                        new FinanceiroCompraResumoDto
+                        {
+                            Id =
+                                x.Id,
+
+                            FornecedorId =
+                                x.FornecedorId,
+
+                            NomeFornecedor =
+                                x.Fornecedor.Nome,
+
+                            NumeroNota =
+                                x.NumeroNota,
+
+                            ValorTotal =
+                                x.ValorTotal,
+
+                            DataCompra =
+                                x.DataCompra
+                        })
+                    .ToList()
         };
     }
-
 
     // ============================================================
     // MOVIMENTAÇÕES
@@ -306,7 +397,9 @@ public class FinanceiroDashboardService
             DateTime? dataFim)
     {
         var (inicio, fimExclusivo, _) =
-            PrepararPeriodo(dataInicio, dataFim);
+            PrepararPeriodo(
+                dataInicio,
+                dataFim);
 
         return await _context
             .MovimentacoesFinanceiras
@@ -319,7 +412,9 @@ public class FinanceiroDashboardService
             .Select(x =>
                 new FinanceiroMovimentacaoResumoDto
                 {
-                    Id = x.Id,
+                    Id =
+                        x.Id,
+
                     Categoria =
                         x.Categoria.ToString(),
 
@@ -338,7 +433,6 @@ public class FinanceiroDashboardService
             .ToListAsync();
     }
 
-
     // ============================================================
     // RELATÓRIO CSV
     // ============================================================
@@ -348,43 +442,101 @@ public class FinanceiroDashboardService
         DateTime? dataInicio,
         DateTime? dataFim)
     {
-        var dashboard = await ObterAsync(
-            empresaId,
-            dataInicio,
-            dataFim);
+        var dashboard =
+            await ObterAsync(
+                empresaId,
+                dataInicio,
+                dataFim);
 
-        var csv = new StringBuilder();
+        var csv =
+            new StringBuilder();
+
+        // ========================================================
+        // CONFIGURAÇÃO DO CSV
+        // ========================================================
+
+        // Ajuda o Excel brasileiro a interpretar corretamente
+        // o arquivo usando ponto e vírgula como separador.
+
+        csv.AppendLine("sep=;");
+
+        csv.AppendLine();
+
+        // ========================================================
+        // CABEÇALHO
+        // ========================================================
 
         csv.AppendLine(
             "RELATORIO FINANCEIRO");
 
         csv.AppendLine(
-            $"Periodo;{dashboard.DataInicio:dd/MM/yyyy};{dashboard.DataFim:dd/MM/yyyy}");
+            $"Periodo;{FormatarData(dashboard.DataInicio)};{FormatarData(dashboard.DataFim)}");
+
+        csv.AppendLine(
+            $"Gerado em;{DateTime.Now:dd/MM/yyyy HH:mm:ss}");
 
         csv.AppendLine();
 
-        csv.AppendLine(
-            "RESUMO");
+        // ========================================================
+        // RESUMO FINANCEIRO
+        // ========================================================
 
         csv.AppendLine(
-            "Total Entradas;Total Saidas;Saldo;Vendas;Compras;Custo das Vendas;Lucro Bruto;Custo Estoque;Venda Estoque;Lucro Potencial");
+            "RESUMO FINANCEIRO");
 
         csv.AppendLine(
-            $"{dashboard.TotalEntradas.ToString("F2", CultureInfo.InvariantCulture)};" +
-            $"{dashboard.TotalSaidas.ToString("F2", CultureInfo.InvariantCulture)};" +
-            $"{dashboard.Saldo.ToString("F2", CultureInfo.InvariantCulture)};" +
-            $"{dashboard.TotalVendas.ToString("F2", CultureInfo.InvariantCulture)};" +
-            $"{dashboard.TotalCompras.ToString("F2", CultureInfo.InvariantCulture)};" +
-            $"{dashboard.CustoDasVendas.ToString("F2", CultureInfo.InvariantCulture)};" +
-            $"{dashboard.LucroBruto.ToString("F2", CultureInfo.InvariantCulture)};" +
-            $"{dashboard.CustoTotalEstoque.ToString("F2", CultureInfo.InvariantCulture)};" +
-            $"{dashboard.ValorVendaEstoque.ToString("F2", CultureInfo.InvariantCulture)};" +
-            $"{dashboard.LucroPotencialEstoque.ToString("F2", CultureInfo.InvariantCulture)}");
+            "Indicador;Valor");
+
+        csv.AppendLine(
+            $"Total de Entradas;{FormatarMoeda(dashboard.TotalEntradas)}");
+
+        csv.AppendLine(
+            $"Total de Saidas;{FormatarMoeda(dashboard.TotalSaidas)}");
+
+        csv.AppendLine(
+            $"Saldo;{FormatarMoeda(dashboard.Saldo)}");
+
+        csv.AppendLine(
+            $"Total de Vendas;{FormatarMoeda(dashboard.TotalVendas)}");
+
+        csv.AppendLine(
+            $"Quantidade de Vendas;{dashboard.QuantidadeVendas}");
+
+        csv.AppendLine(
+            $"Custo das Vendas;{FormatarMoeda(dashboard.CustoDasVendas)}");
+
+        csv.AppendLine(
+            $"Lucro Bruto;{FormatarMoeda(dashboard.LucroBruto)}");
+
+        csv.AppendLine(
+            $"Total de Compras;{FormatarMoeda(dashboard.TotalCompras)}");
+
+        csv.AppendLine(
+            $"Quantidade de Compras;{dashboard.QuantidadeCompras}");
+
+        csv.AppendLine(
+            $"Custo Total do Estoque;{FormatarMoeda(dashboard.CustoTotalEstoque)}");
+
+        csv.AppendLine(
+            $"Valor de Venda do Estoque;{FormatarMoeda(dashboard.ValorVendaEstoque)}");
+
+        csv.AppendLine(
+            $"Lucro Potencial do Estoque;{FormatarMoeda(dashboard.LucroPotencialEstoque)}");
+
+        csv.AppendLine(
+            $"Quantidade Total em Estoque;{FormatarQuantidade(dashboard.QuantidadeTotalEstoque)}");
+
+        csv.AppendLine(
+            $"Produtos com Estoque;{dashboard.ProdutosComEstoque}");
 
         csv.AppendLine();
 
+        // ========================================================
+        // MOVIMENTAÇÕES FINANCEIRAS
+        // ========================================================
+
         csv.AppendLine(
-            "MOVIMENTACOES");
+            "MOVIMENTACOES FINANCEIRAS");
 
         csv.AppendLine(
             "Data;Categoria;Descricao;Tipo;Valor");
@@ -392,39 +544,263 @@ public class FinanceiroDashboardService
         foreach (var item in dashboard.UltimasMovimentacoes)
         {
             csv.AppendLine(
-                $"{item.CriadaEm:dd/MM/yyyy HH:mm};" +
-                $"{item.Categoria};" +
-                $"\"{item.Descricao.Replace("\"", "\"\"")}\";" +
-                $"{(item.Entrada ? "Entrada" : "Saida")};" +
-                $"{item.Valor.ToString("F2", CultureInfo.InvariantCulture)}");
+                string.Join(
+                    ";",
+                    EscaparCsv(
+                        FormatarDataHora(item.CriadaEm)),
+
+                    EscaparCsv(
+                        TraduzirCategoria(item.Categoria)),
+
+                    EscaparCsv(
+                        item.Descricao),
+
+                    EscaparCsv(
+                        item.Entrada
+                            ? "Entrada"
+                            : "Saida"),
+
+                    EscaparCsv(
+                        FormatarMoeda(item.Valor))
+                ));
         }
 
         csv.AppendLine();
 
-        csv.AppendLine(
-            "ESTOQUE");
+        // ========================================================
+        // VENDAS
+        // ========================================================
 
         csv.AppendLine(
-            "Produto;Quantidade;Custo Unitario;Custo Total;Preco Venda;Valor Venda;Lucro Potencial;Ativo");
+            "VENDAS");
+
+        csv.AppendLine(
+            "Data;Venda ID;Valor Total;Custo Total;Lucro");
+
+        foreach (var venda in dashboard.Vendas)
+        {
+            csv.AppendLine(
+                string.Join(
+                    ";",
+                    EscaparCsv(
+                        FormatarDataHora(venda.CriadaEm)),
+
+                    EscaparCsv(
+                        venda.Id.ToString()),
+
+                    EscaparCsv(
+                        FormatarMoeda(venda.ValorTotal)),
+
+                    EscaparCsv(
+                        FormatarMoeda(venda.CustoTotal)),
+
+                    EscaparCsv(
+                        FormatarMoeda(venda.Lucro))
+                ));
+        }
+
+        csv.AppendLine();
+
+        // ========================================================
+        // COMPRAS
+        // ========================================================
+
+        csv.AppendLine(
+            "COMPRAS DE FORNECEDORES");
+
+        csv.AppendLine(
+            "Data;Compra ID;Fornecedor;Numero Nota;Valor Total");
+
+        foreach (var compra in dashboard.Compras)
+        {
+            csv.AppendLine(
+                string.Join(
+                    ";",
+                    EscaparCsv(
+                        FormatarDataHora(compra.DataCompra)),
+
+                    EscaparCsv(
+                        compra.Id.ToString()),
+
+                    EscaparCsv(
+                        compra.NomeFornecedor),
+
+                    EscaparCsv(
+                        compra.NumeroNota),
+
+                    EscaparCsv(
+                        FormatarMoeda(compra.ValorTotal))
+                ));
+        }
+
+        csv.AppendLine();
+
+        // ========================================================
+        // ESTOQUE
+        // ========================================================
+
+        csv.AppendLine(
+            "ESTOQUE ATUAL");
+
+        csv.AppendLine(
+            "Produto;Quantidade;Custo Unitario;Custo Total;Preco Venda;Valor Venda;Lucro Potencial;Status");
 
         foreach (var item in dashboard.Estoque)
         {
             csv.AppendLine(
-                $"\"{item.NomeProduto.Replace("\"", "\"\"")}\";" +
-                $"{item.Quantidade.ToString("F3", CultureInfo.InvariantCulture)};" +
-                $"{item.CustoUnitario.ToString("F2", CultureInfo.InvariantCulture)};" +
-                $"{item.CustoTotal.ToString("F2", CultureInfo.InvariantCulture)};" +
-                $"{item.PrecoVenda.ToString("F2", CultureInfo.InvariantCulture)};" +
-                $"{item.ValorVendaTotal.ToString("F2", CultureInfo.InvariantCulture)};" +
-                $"{item.LucroPotencial.ToString("F2", CultureInfo.InvariantCulture)};" +
-                $"{(item.Ativo ? "Ativo" : "Bloqueado")}");
+                string.Join(
+                    ";",
+                    EscaparCsv(
+                        item.NomeProduto),
+
+                    EscaparCsv(
+                        FormatarQuantidade(item.Quantidade)),
+
+                    EscaparCsv(
+                        FormatarMoeda(item.CustoUnitario)),
+
+                    EscaparCsv(
+                        FormatarMoeda(item.CustoTotal)),
+
+                    EscaparCsv(
+                        FormatarMoeda(item.PrecoVenda)),
+
+                    EscaparCsv(
+                        FormatarMoeda(item.ValorVendaTotal)),
+
+                    EscaparCsv(
+                        FormatarMoeda(item.LucroPotencial)),
+
+                    EscaparCsv(
+                        item.Ativo
+                            ? "Ativo"
+                            : "Bloqueado")
+                ));
         }
 
-        return Encoding.UTF8.GetPreamble()
-            .Concat(Encoding.UTF8.GetBytes(csv.ToString()))
+        csv.AppendLine();
+
+        // ========================================================
+        // RODAPÉ
+        // ========================================================
+
+        csv.AppendLine(
+            "FIM DO RELATORIO");
+
+        // ========================================================
+        // UTF-8 COM BOM
+        //
+        // O BOM faz o Excel reconhecer corretamente:
+        // - acentos;
+        // - ç;
+        // - ã;
+        // - ê;
+        // - caracteres especiais.
+        // ========================================================
+
+        var texto =
+            csv.ToString();
+
+        var bytes =
+            Encoding.UTF8.GetBytes(texto);
+
+        return Encoding.UTF8
+            .GetPreamble()
+            .Concat(bytes)
             .ToArray();
     }
 
+    // ============================================================
+    // FORMATAÇÃO CSV
+    // ============================================================
+
+    private static string EscaparCsv(
+        string? valor)
+    {
+        if (string.IsNullOrEmpty(valor))
+            return "\"\"";
+
+        var resultado =
+            valor
+                .Replace("\"", "\"\"")
+                .Replace("\r", " ")
+                .Replace("\n", " ");
+
+        return $"\"{resultado}\"";
+    }
+
+    // ============================================================
+    // FORMATAÇÃO DE MOEDA
+    // ============================================================
+
+    private static string FormatarMoeda(
+        decimal valor)
+    {
+        return valor.ToString(
+            "#,##0.00",
+            new CultureInfo("pt-BR"));
+    }
+
+    // ============================================================
+    // FORMATAÇÃO DE QUANTIDADE
+    // ============================================================
+
+    private static string FormatarQuantidade(
+        decimal valor)
+    {
+        return valor.ToString(
+            "#,##0.###",
+            new CultureInfo("pt-BR"));
+    }
+
+    // ============================================================
+    // FORMATAÇÃO DE DATA
+    // ============================================================
+
+    private static string FormatarData(
+        DateTime data)
+    {
+        return data.ToString(
+            "dd/MM/yyyy",
+            new CultureInfo("pt-BR"));
+    }
+
+    // ============================================================
+    // FORMATAÇÃO DE DATA E HORA
+    // ============================================================
+
+    private static string FormatarDataHora(
+        DateTime data)
+    {
+        return data.ToString(
+            "dd/MM/yyyy HH:mm:ss",
+            new CultureInfo("pt-BR"));
+    }
+
+    // ============================================================
+    // TRADUZ CATEGORIA FINANCEIRA
+    // ============================================================
+
+    private static string TraduzirCategoria(
+        string categoria)
+    {
+        return categoria switch
+        {
+            nameof(CategoriaMovimentacaoFinanceira.Venda)
+                => "Venda",
+
+            nameof(CategoriaMovimentacaoFinanceira.CompraFornecedor)
+                => "Compra de Fornecedor",
+
+            nameof(CategoriaMovimentacaoFinanceira.Despesa)
+                => "Despesa",
+
+            nameof(CategoriaMovimentacaoFinanceira.Ajuste)
+                => "Ajuste",
+
+            _ => categoria
+        };
+    }
 
     // ============================================================
     // PREPARAÇÃO DO PERÍODO
@@ -438,17 +814,19 @@ public class FinanceiroDashboardService
             DateTime? dataInicio,
             DateTime? dataFim)
     {
-        var inicio = dataInicio.HasValue
-            ? DateTime.SpecifyKind(
-                dataInicio.Value.Date,
-                DateTimeKind.Utc)
-            : DateTime.UtcNow.Date;
+        var inicio =
+            dataInicio.HasValue
+                ? DateTime.SpecifyKind(
+                    dataInicio.Value.Date,
+                    DateTimeKind.Utc)
+                : DateTime.UtcNow.Date;
 
-        var fim = dataFim.HasValue
-            ? DateTime.SpecifyKind(
-                dataFim.Value.Date,
-                DateTimeKind.Utc)
-            : inicio;
+        var fim =
+            dataFim.HasValue
+                ? DateTime.SpecifyKind(
+                    dataFim.Value.Date,
+                    DateTimeKind.Utc)
+                : inicio;
 
         if (fim < inicio)
         {

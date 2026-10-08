@@ -5,8 +5,9 @@ using DotNetEnv;
 using ControlHub.Api.Data;
 using ControlHub.Api.Services;
 using ControlHub.Api.Services.Relatorios;
+using QuestPDF.Infrastructure;
 Env.Load();
-
+QuestPDF.Settings.License = LicenseType.Community;
 var builder = WebApplication.CreateBuilder(args);
 
 // ==========================================
